@@ -1,19 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddTask from "./components/AddTask";
 import Tasks from "./components/Tasks";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  // ['hola', 'chau']
-  //[
-  //   {
-  //     value: 'hola',
-  //     completed: false,
-  //   }, {
-  //     value: 'chau',
-  //     completed: false
-  //   }
-  // ]
 
   function handleInputValue(value) {
     setTasks([
@@ -25,10 +15,25 @@ function App() {
     ]);
   }
 
+  function handleCallback(name) {
+    const modifiedTasks = tasks.map((task) => {
+      if (task.value == name) {
+        return {
+          value: task.value,
+          isCompleted: !task.isCompleted
+        };
+      }
+
+      return task;
+    });
+
+    setTasks(modifiedTasks);
+  }
+
   return (
     <>
       <AddTask handleCallback={handleInputValue} />
-      <Tasks tasks={tasks} />
+      <Tasks handleCallback={handleCallback} tasks={tasks} />
       Tareas resultas:
       <ul>
         <li>ACA VAN</li>
